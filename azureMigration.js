@@ -1,21 +1,15 @@
-const {BlobServiceClient, HttpHeaders} = require('@azure/storage-blob');
-const uuidv1 = require('uuid/v1');
+const {BlobServiceClient} = require('@azure/storage-blob');
 const fs = require('fs');
 const fse = require('fs-extra');
 
 async function main() {
-
-
     const db = "public/db";
 
     Array.prototype.numericSort = function () {
         return this.sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
     };
 
-
     const parsedImagesFormat = ".jpg";
-
-    //fse.outputFileSync('migrateOptions/lastIndex.json', JSON.stringify([{c: 12}]), 'utf8');
 
     const lastIndex = fs.existsSync('migrateOptions/lastIndex.json') ? JSON.parse(fs.readFileSync('migrateOptions/lastIndex.json')) : {};
     const resultDb = fs.existsSync('migrateOptions/resultDb.json') ? JSON.parse(fs.readFileSync('migrateOptions/resultDb.json')) : {};
@@ -25,22 +19,21 @@ async function main() {
         return this.filter((title) => !existTitles.includes(title));
     };
 
-    const resultUploadList = []; // Список для закачки на сервер
+    const resultUploadList = [];
 
     fs.readdirSync(db).forEach(category => {
         const categoryPath = `${db}/${category}`;
-        //console.log(category);
+        // console.log(category);
         if (resultDb[category] === undefined) resultDb[category] = [];
-        //resultDb.includes(category)
 
         if (lastIndex[category] === undefined) lastIndex[category] = 0;
 
-        fs.readdirSync(categoryPath).filterExists().forEach((title, titleNum) => {
+        fs.readdirSync(categoryPath).filterExists().forEach((title) => {
             const titlePath = `${categoryPath}/${title}`;
             const titleDbName = lastIndex[category].toString(36);
             lastIndex[category] += 1;
             existTitles.push(title);
-            //console.log(`\t ${titleNum.toString(36)}: ${title}`);
+            // console.log(`\t ${titleNum.toString(36)}: ${title}`);
 
             const titleInfo = {
                 title,
@@ -52,7 +45,7 @@ async function main() {
 
             fs.readdirSync(titlePath).numericSort().forEach((chapter, chapterNum) => {
                 const chapterPath = `${titlePath}/${chapter}`;
-                //console.log(`\t\t\t ${chapterNum.toString(36)}: ${chapter}`);
+                // console.log(`\t\t\t ${chapterNum.toString(36)}: ${chapter}`);
 
                 const chapterDbName = chapterNum.toString(36);
                 const chapterInfo = {chapter, pagesCount: 0};
@@ -64,7 +57,7 @@ async function main() {
                         uploadPath: `${category}/${titleDbName}/${chapterDbName}/${pageDbName}${parsedImagesFormat}`,
                         localPath: pagePath,
                     };
-                    //console.log(`\t\t\t\t ${pageNum.toString(36)}: ${page}`);
+                    // console.log(`\t\t\t\t ${pageNum.toString(36)}: ${page}`);
                     // console.log(pagePath);
                     chapterInfo.pagesCount++;
                     resultUploadList.push(fileInfo);
@@ -84,12 +77,9 @@ async function main() {
     fse.outputFileSync('migrateOptions/existTitles.json', JSON.stringify(existTitles), 'utf8');
     fse.outputFileSync('migrateOptions/lastIndex.json', JSON.stringify(lastIndex), 'utf8');
 
-    //return;
-    // [2S-Shoujo]_Hanasakeru_Seishounen_extra
-//Adachi to Shimamura (Адачи и Шимамура)
+    //return; // for debug
 
     console.log('Azure Blob storage v12 - JavaScript');
-    /*const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;`;*/
     const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=https;AccountName=uwu;AccountKey=5isyqDG2wmPpFvG+EJ+1+2cgwtUIfVab7FumP1QPDe717zx6U+FwGOI4xDUWc/scfuUSIGrkT2dNdzVYUM0oDw==;EndpointSuffix=core.windows.net`;
     const blobServiceClient = await BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
 
@@ -128,7 +118,7 @@ async function main() {
     }
 
     let promises = [];
-
+    // uploading
     for (const file of resultUploadList) {
         promises.push(uploadFile(file));
         if (promises.length > 20) {

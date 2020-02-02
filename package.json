@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "run": "node index.js",
+    "azureMigration": "node azureMigration.js",
     "start-dev": "nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "^12.0.2",
+    "@types/dotenv": "^4.0.3",
     "bcrypt": "^3.0.7",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -30,6 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.0",
     "pg-hstore": "^2.3.3",
+    "readdir-sorted": "^3.0.0",
     "sequelize": "^5.12.3",
     "tedious": "^8.0.1"
   },

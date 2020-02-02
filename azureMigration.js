@@ -1,6 +1,7 @@
 const {BlobServiceClient, HttpHeaders} = require('@azure/storage-blob');
 const uuidv1 = require('uuid/v1');
 const fs = require('fs');
+const fse = require('fs-extra');
 
 async function main() {
 
@@ -12,29 +13,40 @@ async function main() {
     };
 
 
-    const resultDb = {}
-    const parsedImagesFormat = ".jpg"
+    const parsedImagesFormat = ".jpg";
 
-    // for (let i=0; i<1000; i++) console.log( i.toString(36));
+    //fse.outputFileSync('migrateOptions/lastIndex.json', JSON.stringify([{c: 12}]), 'utf8');
 
-//return;
-    const resultUploadList = [];
+    const lastIndex = fs.existsSync('migrateOptions/lastIndex.json') ? JSON.parse(fs.readFileSync('migrateOptions/lastIndex.json')) : {};
+    const resultDb = fs.existsSync('migrateOptions/resultDb.json') ? JSON.parse(fs.readFileSync('migrateOptions/resultDb.json')) : {};
+    const existTitles = fs.existsSync('migrateOptions/existTitles.json') ? JSON.parse(fs.readFileSync('migrateOptions/existTitles.json')) : [];
+
+    Array.prototype.filterExists = function () {
+        return this.filter((title) => !existTitles.includes(title));
+    };
+
+    const resultUploadList = []; // Список для закачки на сервер
 
     fs.readdirSync(db).forEach(category => {
         const categoryPath = `${db}/${category}`;
-        console.log(category);
-        resultDb[category] = [];
+        //console.log(category);
+        if (resultDb[category] === undefined) resultDb[category] = [];
+        //resultDb.includes(category)
 
-        fs.readdirSync(categoryPath).forEach((title, titleNum) => {
+        if (lastIndex[category] === undefined) lastIndex[category] = 0;
+
+        fs.readdirSync(categoryPath).filterExists().forEach((title, titleNum) => {
             const titlePath = `${categoryPath}/${title}`;
+            const titleDbName = lastIndex[category].toString(36);
+            lastIndex[category] += 1;
+            existTitles.push(title);
             //console.log(`\t ${titleNum.toString(36)}: ${title}`);
-            const titleDbName = titleNum.toString(36);
 
             const titleInfo = {
                 title,
                 lang: 'ru',
-                db: `${category}/${titleDbName}`,
                 category,
+                db: titleDbName,
                 chapters: []
             };
 
@@ -61,29 +73,34 @@ async function main() {
                 titleInfo.chapters.push(chapterInfo)
             });
             resultDb[category].push(titleInfo);
-
         });
     });
-    console.log(resultUploadList);
-    //console.log(resultDb);
-    //return;
 
+    console.log(resultUploadList);
+    console.log(resultDb);
+    console.log(lastIndex);
+
+    fse.outputFileSync('migrateOptions/resultDb.json', JSON.stringify(resultDb), 'utf8');
+    fse.outputFileSync('migrateOptions/existTitles.json', JSON.stringify(existTitles), 'utf8');
+    fse.outputFileSync('migrateOptions/lastIndex.json', JSON.stringify(lastIndex), 'utf8');
+
+    //return;
+    // [2S-Shoujo]_Hanasakeru_Seishounen_extra
+//Adachi to Shimamura (Адачи и Шимамура)
 
     console.log('Azure Blob storage v12 - JavaScript');
-    /*    const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;`;*/
+    /*const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;`;*/
     const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=https;AccountName=uwu;AccountKey=5isyqDG2wmPpFvG+EJ+1+2cgwtUIfVab7FumP1QPDe717zx6U+FwGOI4xDUWc/scfuUSIGrkT2dNdzVYUM0oDw==;EndpointSuffix=core.windows.net`;
     const blobServiceClient = await BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
 
 
     const containerName = 'images';
     const containerClient = await blobServiceClient.getContainerClient(containerName);
-    /*try {
-        const createContainerResponse = await containerClient.create();
-    } catch (e) {}
-*/
-    //const setAccessControlResponse = await containerClient.setAccessPolicy('Blob');
-    //console.log(setAccessControlResponse);
-    /////////
+
+    if (!(await containerClient.exists())) {
+        await containerClient.create();
+        await containerClient.setAccessPolicy('Blob');
+    }
 
     // Create a unique name for the blob
     function uploadFile(f) {
@@ -102,17 +119,24 @@ async function main() {
                 await blockBlobClient.setHTTPHeaders({blobContentType: "image/jpeg", blobCacheControl: "public"});
                 console.log('uploaded:', file.uploadPath)
             } catch (e) {
-                console.log(e.message)
-                reject(e.message)
+                console.log(e.message);
+                reject(e.message);
                 return;
             }
             resolve();
         })
     }
 
+    let promises = [];
+
     for (const file of resultUploadList) {
-        await uploadFile(file);
+        promises.push(uploadFile(file));
+        if (promises.length > 20) {
+            await Promise.all(promises);
+            promises = [];
+        }
     }
+    await Promise.all(promises);
 
 }
 

@@ -1,6 +1,8 @@
 const {BlobServiceClient} = require('@azure/storage-blob');
 const fs = require('fs');
 const fse = require('fs-extra');
+const Bottleneck = require("bottleneck");
+
 
 async function main() {
     const db = "public/db";
@@ -73,11 +75,13 @@ async function main() {
     console.log(resultDb);
     console.log(lastIndex);
 
+    // commit and save
     fse.outputFileSync('migrateOptions/resultDb.json', JSON.stringify(resultDb), 'utf8');
     fse.outputFileSync('migrateOptions/existTitles.json', JSON.stringify(existTitles), 'utf8');
     fse.outputFileSync('migrateOptions/lastIndex.json', JSON.stringify(lastIndex), 'utf8');
 
-    //return; // for debug
+    // \Kage no Jitsuryokusha ni Naritakute 1 2 главы
+   // return; // for debug
 
     console.log('Azure Blob storage v12 - JavaScript');
     const AZURE_STORAGE_CONNECTION_STRING = `DefaultEndpointsProtocol=https;AccountName=uwu;AccountKey=5isyqDG2wmPpFvG+EJ+1+2cgwtUIfVab7FumP1QPDe717zx6U+FwGOI4xDUWc/scfuUSIGrkT2dNdzVYUM0oDw==;EndpointSuffix=core.windows.net`;
@@ -100,13 +104,16 @@ async function main() {
                 const blobName = file.uploadPath;
                 const blockBlobClient = containerClient.getBlockBlobClient(blobName);
                 const ex = await blockBlobClient.exists();
-                console.log(ex);
+                // console.log(ex);
                 if (ex) {
                     resolve();
                     return;
                 }
                 await blockBlobClient.uploadFile(file.localPath);
-                await blockBlobClient.setHTTPHeaders({blobContentType: "image/jpeg", blobCacheControl: "public"});
+                await blockBlobClient.setHTTPHeaders({
+                    blobContentType: "image/jpeg",
+                    blobCacheControl: "public"
+                });
                 console.log('uploaded:', file.uploadPath)
             } catch (e) {
                 console.log(e.message);
@@ -117,16 +124,12 @@ async function main() {
         })
     }
 
-    let promises = [];
-    // uploading
-    for (const file of resultUploadList) {
-        promises.push(uploadFile(file));
-        if (promises.length > 20) {
-            await Promise.all(promises);
-            promises = [];
-        }
-    }
-    await Promise.all(promises);
+    const limiter = new Bottleneck({ maxConcurrent: 20 });
+
+    const throttledUploadFile = limiter.wrap(uploadFile);
+
+    const allThePromises = resultUploadList.map(file => throttledUploadFile(file))
+    await Promise.all(allThePromises);
 
 }
 

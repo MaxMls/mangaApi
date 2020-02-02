@@ -1,0 +1,44 @@
+{
+  "name": "sequelize-with-postgres",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "orie chinedu",
+  "license": "MIT",
+  "scripts": {
+    "run": "node index.js",
+    "start-dev": "nodemon index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
+    "coverage": "npm run pretest && jest --coverage && cat ./coverage/lcov.info | coveralls"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "verbose": true
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.0.2",
+    "bcrypt": "^3.0.7",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.12.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.12.3",
+    "tedious": "^8.0.1"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.6",
+    "cross-env": "^5.2.0",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.1",
+    "sequelize-cli": "^5.5.1",
+    "supertest": "^4.0.2"
+  }
+}

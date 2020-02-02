@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a51a6cfb-fdde-4960-a89a-4e51717c0720" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1UtBTebIgn6p7yiyE4JR98F3Rl9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="javascript.nodejs.core.library.configured.version" value="13.7.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/database/seeders" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2019.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Users\Max1\Documents\vueProjects\mangaApi\database\seeders" />
+      <recent name="D:\Users\Max\Desktop\sequelize-with-postgres-tutorial-master\public\covers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\Max1\Documents\vueProjects\mangaApi\database\seeders" />
+      <recent name="D:\Users\Max1\Desktop\sequelize-with-postgres-tutorial-master\controllers" />
+      <recent name="D:\Users\Max1\Desktop\sequelize-with-postgres-tutorial-master\database\models" />
+      <recent name="D:\Users\Max\Desktop\sequelize-with-postgres-tutorial-master\database\models" />
+      <recent name="D:\Users\Max\Desktop\sequelize-with-postgres-tutorial-master\controllers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.run">
+    <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="migrate" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="run" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start-dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start-dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.run" />
+        <item itemvalue="npm.start-dev" />
+        <item itemvalue="npm.migrate" />
+        <item itemvalue="npm.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a51a6cfb-fdde-4960-a89a-4e51717c0720" name="Default Changelist" comment="" />
+      <created>1576166019176</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576166019176</updated>
+      <workItem from="1576166020573" duration="2401000" />
+      <workItem from="1576243493857" duration="86428000" />
+      <workItem from="1576584797762" duration="23330000" />
+      <workItem from="1576682771375" duration="4101000" />
+      <workItem from="1576855830004" duration="251000" />
+      <workItem from="1580415625445" duration="5735000" />
+      <workItem from="1580534749092" duration="605000" />
+      <workItem from="1580537583198" duration="32452000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="687" y="410" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1576305531504">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="687" y="410" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1858.1080@0.0.1858.1080" timestamp="1576305531504" />
+    <state width="867" height="466" key="DebuggerActiveHint" timestamp="1580569844339">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="867" height="466" key="DebuggerActiveHint/0.0.1858.1080@0.0.1858.1080" timestamp="1580569844339" />
+    <state x="709" y="296" key="FileChooserDialogImpl" timestamp="1580586527020">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="709" y="296" key="FileChooserDialogImpl/0.0.1858.1080@0.0.1858.1080" timestamp="1580586527020" />
+    <state width="1815" height="364" key="GridCell.Tab.0.bottom" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.0.center" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.0.left" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.0.right" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.1.bottom" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.1.center" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.1.left" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.1.right" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.2.bottom" timestamp="1580631431596">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.2.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431596" />
+    <state width="1815" height="364" key="GridCell.Tab.2.center" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.2.center/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.2.left" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.2.left/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.2.right" timestamp="1580631431595">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.2.right/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431595" />
+    <state width="1815" height="364" key="GridCell.Tab.3.bottom" timestamp="1580631431596">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.3.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431596" />
+    <state width="1815" height="364" key="GridCell.Tab.3.center" timestamp="1580631431596">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.3.center/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431596" />
+    <state width="1815" height="364" key="GridCell.Tab.3.left" timestamp="1580631431596">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.3.left/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431596" />
+    <state width="1815" height="364" key="GridCell.Tab.3.right" timestamp="1580631431596">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="364" key="GridCell.Tab.3.right/0.0.1858.1080@0.0.1858.1080" timestamp="1580631431596" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1576305483984">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1858.1080@0.0.1858.1080" timestamp="1576305483984" />
+    <state x="431" y="278" key="run.anything.popup" timestamp="1580569264361">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="431" y="278" key="run.anything.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1580569264361" />
+    <state x="438" y="311" width="672" height="678" key="search.everywhere.popup" timestamp="1576643936038">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="438" y="311" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1576643936038" />
+  </component>
+</project>

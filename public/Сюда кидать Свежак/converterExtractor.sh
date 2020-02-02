@@ -1,57 +1,62 @@
-#!/bin/bash
+п»ї#!/bin/bash
 
-# преобразует архивы и pdf в папки с файлами
+# РїСЂРµРѕР±СЂР°Р·СѓРµС‚ zip, rar, cbr(rar) Р°СЂС…РёРІС‹ Рё pdf РІ РїР°РїРєРё СЃ РєР°СЂС‚РёРЅРєР°РјРё jpg jpeg gif png apng 
+# template:
+# before:   images.rar
+# after:    images/exctractedFolder[0..n]/.../exctractedFile[0..n].[jpg/jpeg/gif/png/apng]
+
+# Р±РµСЂРµС‚ С„Р°Р№Р»С‹ РёР· С‚РµРєСѓС‰РµР№ РїР°РїРєРё "." Рё РєР»Р°РґРµС‚ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Рµ РІ "../db"
 echo "finding pdf's...";
 
 find -name '*.pdf' -print0 | while read -d $'\0' i
 do
-    echo "$i"
+	echo "$i"
 	y=${i%.*};
 	mkdir -p "$y"; 
-    if convert "$i" "$y"/img.jpg; then
-         rm "$i";
-    else
-        rmdir "$y";
-    fi
+	if convert "$i" "$y"/img.jpg; then
+		 rm "$i";
+	else
+		rmdir "$y";
+	fi
 done
 
 echo "finding rar's...";
 
 find -name '*.rar' -or -name '*.cbr' -print0 | while read -d $'\0' archive
 do
-    echo "$archive"
-    destination="${archive%.*}"
-    mkdir -p "$destination"; 
+	echo "$archive"
+	destination="${archive%.*}"
+	mkdir -p "$destination"; 
 
-    if unrar e "$archive" "$destination"; then
-        rm "$archive";
-    else
-        rmdir "$destination";
-    fi
+	if unrar e "$archive" "$destination"; then
+		rm "$archive";
+	else
+		rmdir "$destination";
+	fi
 done
 
 echo "finding zip's...";
 
 find -name '*.zip' -print0 | while read -d $'\0' archive
 do
-    echo "$archive"
-    destination="${archive%.*}"
-    mkdir -p "$destination";
+	echo "$archive"
+	destination="${archive%.*}"
+	mkdir -p "$destination";
 
-    if unzip "$archive" -d "$destination"; then
-        rm "$archive";
-    else
-        rmdir "$destination";
-    fi
+	if unzip "$archive" -d "$destination"; then
+		rm "$archive";
+	else
+		rmdir "$destination";
+	fi
 done
 
 
 
 # jpg jpeg gif png apng 
-# открывать папку пока не попадется картинка, родитель картинки - имя главы, но если картинки в корневой папке, то имя главы = 0
+# РѕС‚РєСЂС‹РІР°С‚СЊ РїР°РїРєСѓ РїРѕРєР° РЅРµ РїРѕРїР°РґРµС‚СЃСЏ РєР°СЂС‚РёРЅРєР°, СЂРѕРґРёС‚РµР»СЊ РєР°СЂС‚РёРЅРєРё - РёРјСЏ РіР»Р°РІС‹, РЅРѕ РµСЃР»Рё РєР°СЂС‚РёРЅРєРё РІ РєРѕСЂРЅРµРІРѕР№ РїР°РїРєРµ, С‚Рѕ РёРјСЏ РіР»Р°РІС‹ = 0
 # 
-# все главы сортируются по строке имени, по возрастанию
-# имя корневой папки - название произведения
+# РІСЃРµ РіР»Р°РІС‹ СЃРѕСЂС‚РёСЂСѓСЋС‚СЃСЏ РїРѕ СЃС‚СЂРѕРєРµ РёРјРµРЅРё, РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
+# РёРјСЏ РєРѕСЂРЅРµРІРѕР№ РїР°РїРєРё - РЅР°Р·РІР°РЅРёРµ РїСЂРѕРёР·РІРµРґРµРЅРёСЏ
 
 echo "starting create db...";
 echo "converting image's...";
@@ -62,55 +67,55 @@ mkdir -p "$db";
 
 dbcreate () 
 { 
-    img=$1;
+	img=$1;
 
-    dir=$(dirname "$img");
-    name=$(basename "$img");
-    chapter=${dir##*/}
-    extension="${img##*.}"
+	dir=$(dirname "$img");
+	name=$(basename "$img");
+	chapter=${dir##*/}
+	extension="${img##*.}"
 
-    base=$(echo "$dir" | cut -d "/" -f 3)
-    category=$(echo "$dir" | cut -d "/" -f 2)
+	base=$(echo "$dir" | cut -d "/" -f 3)
+	category=$(echo "$dir" | cut -d "/" -f 2)
 
 
    # echo "---------------";
    # echo "$chapter";
    # echo "$name";
    # echo "$extension";
-    #echo "$base";
-    #echo "$category";
+	#echo "$base";
+	#echo "$category";
 
 
-    if [[ "$base" == "$chapter" ]]; then
-        chapter="0";
-    fi
+	if [[ "$base" == "$chapter" ]]; then
+		chapter="0";
+	fi
 
-    finDir="./$db/$category/$base/$chapter";
-    finFile="$finDir/${name%.*}.jpg"
+	finDir="./$db/$category/$base/$chapter";
+	finFile="$finDir/${name%.*}.jpg"
 
 
-    if [[ ! -d "$finDir" ]]; then
-        mkdir -p "$finDir";
-    fi
+	if [[ ! -d "$finDir" ]]; then
+		mkdir -p "$finDir";
+	fi
 
-    if [[ ! -f "$finFile" ]]; then
-        if [[ $extension == "jpg" ]] || [[ $extension == "jpeg" ]]; then
-            mv "$img" "$finFile";
-        else
-            convert "$img" "$finFile";
-        fi
-    fi
+	if [[ ! -f "$finFile" ]]; then
+		if [[ $extension == "jpg" ]] || [[ $extension == "jpeg" ]]; then
+			mv "$img" "$finFile";
+		else
+			convert "$img" "$finFile";
+		fi
+	fi
 
-    
-    # echo "$img";
-    # echo "$finDir/$name"
+	
+	# echo "$img";
+	# echo "$finDir/$name"
 
-    # rmdir "$finDir";
+	# rmdir "$finDir";
 }
 
 find -type f \( -iname  \*.jpg -o -iname \*.jpeg  -o -iname \*.gif  -o -iname \*.png \) -print0 | while read -d $'\0' img
 do
-    dbcreate "$img" &
+	dbcreate "$img" &
 done
 
 wait

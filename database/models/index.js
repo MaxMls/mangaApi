@@ -3,6 +3,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const envConfigs = require('../config/config');
 
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -34,12 +35,23 @@ function isAdmin(user) {
 const out = {sequelize, Sequelize, isAdmin};
 Object.assign(out, sequelize.models);
 
+
+
 (async function () {
 	sequelize.options.logging = false;
 	const options = {alter: true, force: false};
 	await sequelize.sync(options);
 	console.log("sequelize.sync", options, "end");
-	sequelize.options.logging = console.log
+	sequelize.options.logging = console.log;
+
+	const migrations = require('../migrations');
+	migrations.sync();
 })();
+
+
+
+
+
+
 
 module.exports = out;

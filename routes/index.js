@@ -6,12 +6,12 @@ const router = Router();
 
 function user(req, res, next) {
     if (req.userModel !== null) next()
-    else res.status(401)
+    else res.status(401).send('not auth')
 }
 
 function admin(req, res, next) {
     if (req.userModel && req.userModel.role === 0) next()
-    else res.status(404)
+    else res.status(404).send('not auth')
 }
 
 router.use(controllers.defUserModel);
@@ -42,7 +42,10 @@ router.put('/users/:userId', user, controllers.updateUser);
 
 router.post('/auth/login', controllers.authLogin);
 router.post('/auth/logout', controllers.authLogout);
-router.post('/auth/profile', user, controllers.authProfile);
+router.post('/auth/profile',  controllers.authProfile);
+
+router.post('/users/history', user, controllers.changeHistory);
+router.post('/users/favorite', user, controllers.changeFavorite);
 
 //router.get('/users/:userId/history', controllers.getUserHistory); // история автоматически формируется при запросах с сервера
 

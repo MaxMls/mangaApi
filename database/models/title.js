@@ -4,6 +4,8 @@ module.exports = (sequelize, DataTypes) => {
 		description: {allowNull: true, type: DataTypes.TEXT},
 		chaptersCount: {allowNull: false, type: DataTypes.INTEGER/*, defaultValue: 0*/},
 		lang: {allowNull: false, type: DataTypes.STRING(2) },
+		db: {allowNull: false, type: DataTypes.STRING},
+		category: {allowNull: false, type: DataTypes.STRING},
 	}, {});
 	title.associate = function (models) {
 		// associations can be defined here

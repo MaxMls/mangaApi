@@ -6,7 +6,7 @@ module.exports = {
 
     async defUserModel(req, res, next) {
         try {
-            let token = req.body.token;
+            let token = req.body.token || req.query.token;
             let userObj = jwt.verify(token, process.env.JWT_SECRET);
             req.userModel = await models.user.findOne({
                 where: {

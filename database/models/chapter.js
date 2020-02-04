@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 		name: {allowNull: false, type: DataTypes.TEXT}, // можно редачить из интерфейса
 		pagesCount: {allowNull: false, type: DataTypes.INTEGER/*, defaultValue: 0*/},
 		titleId: {allowNull: false, type: DataTypes.INTEGER/*, unique: uniqueRule1*/},
-		folderName: {allowNull: false, type: DataTypes.TEXT/*, unique: uniqueRule1*/} // имя папки с картинками главы
+		db: {allowNull: false, type: DataTypes.STRING}
 	}, {});
 	chapter.associate = function (models) {
 		chapter.hasMany(models.comment, {

@@ -47,7 +47,5 @@ router.post('/auth/profile',  controllers.authProfile);
 router.post('/users/history', user, controllers.changeHistory);
 router.post('/users/favorite', user, controllers.changeFavorite);
 
-//router.get('/users/:userId/history', controllers.getUserHistory); // история автоматически формируется при запросах с сервера
-
 
 module.exports = router;

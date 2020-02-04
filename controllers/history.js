@@ -8,9 +8,9 @@ module.exports = {
     },
 
     changeHistory: async (req, res) => {
-        const {chaptersIds = [], isRead = false} = req.body;
+        const {chaptersIds = [], isRead = false, pageNum} = req.body;
         try {
-            const result = await req.userModel[(isRead ? 'add' : 'remove') + 'Chapters'](chaptersIds, []);
+            const result = await req.userModel[(isRead ? 'add' : 'remove') + 'Chapters'](chaptersIds, {through: {pageNum}});
             res.status(200).json(result);
         } catch (e) {
             console.error(e);

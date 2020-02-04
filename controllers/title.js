@@ -82,7 +82,7 @@ module.exports = {
 
                 title.chapters = title.chapters.forEach(c => {
                     const hist = history.find(hc => hc.dataValues.id === c.dataValues.id);
-                    c.dataValues.history = hist ? hist.history : null;
+                    c.dataValues.history = hist ? hist.history : { pageNum: 0};
                 })
             }
 

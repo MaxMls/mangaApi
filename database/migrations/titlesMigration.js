@@ -13,7 +13,7 @@ module.exports = {
 
         for (const t of titles) {
 
-            if (await models.title.findOne({where: {name: t.title}})) continue;
+            if (await models.title.findOne({where: {name: t.title}})) break;
 
             const title = await models.title.create({
                 name: t.title,
@@ -31,11 +31,9 @@ module.exports = {
                     titleId: title.id,
                     db: i.toString(36)
                 })
-
             }
-
-
         }
+        console.log("all data migrated")
 
 
     }

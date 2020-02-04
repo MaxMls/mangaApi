@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const history = sequelize.define('history', {
-		pageNum: {allowNull: true, type: DataTypes.INTEGER}
+		pageNum: {allowNull: false, type: DataTypes.INTEGER}
 	}, {});
 	history.associate = function (models) {
 

@@ -50,7 +50,7 @@ module.exports = {
     },
 
 
-    getTitleById: async (req, res) => {
+    async getTitleById(req, res){
 
         try {
             const {titleId} = req.params;

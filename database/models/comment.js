@@ -1,20 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
 	const comment = sequelize.define('comment', {
-		chapterId: {allowNull: false, type: DataTypes.INTEGER},
-		text:  {allowNull: true, type: DataTypes.TEXT},
-		isSpoiler: {allowNull: false, type: DataTypes.BOOLEAN/*, defaultValue: false*/}
+		titleId: {allowNull: false, type: DataTypes.INTEGER},
+		authorId: {allowNull: false, type: DataTypes.INTEGER},
+		text:  {allowNull: false, type: DataTypes.TEXT},
+		parentCommentId:  {allowNull: true, type: DataTypes.INTEGER},
+		isSpoiler: {allowNull: true, type: DataTypes.BOOLEAN},
+		likeCount: {allowNull: false, type: DataTypes.INTEGER}
 	}, {});
 	comment.associate = function (models) {
 
 		comment.hasMany(models.comment, {
-			foreignKey:"parentComment",
+			foreignKey:"parentCommentId",
 			as: 'childComments',
 			onDelete: 'CASCADE',
 		});
 
-		comment.belongsTo(models.user);
-		comment.belongsTo(models.chapter);
-		comment.belongsTo(models.comment, {foreignKey:"parentComment"});
+		comment.belongsToMany(models.user, {as: 'liker', through: 'likes'});
+
+		comment.belongsTo(models.user, { as: 'author'});
+		comment.belongsTo(models.title);
+		comment.belongsTo(models.comment, {foreignKey:"parentCommentId"});
 
 	};
 	return comment;

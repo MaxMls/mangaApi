@@ -42,10 +42,16 @@ router.put('/users/:userId', user, controllers.updateUser);
 
 router.post('/auth/login', controllers.authLogin);
 router.post('/auth/logout', controllers.authLogout);
-router.post('/auth/profile',  controllers.authProfile);
+router.post('/auth/profile', controllers.authProfile);
 
 router.post('/users/history', user, controllers.changeHistory);
 router.post('/users/favorite', user, controllers.changeFavorite);
+
+router.post('/comments/', user, controllers.postComment);
+router.get('/comments/', controllers.getComments);
+router.put('/comments/:commentId', user, controllers.editComment);
+router.delete('/comments/:commentId', user, controllers.deleteComment);
+router.post('/comments/:commentId/like', user, controllers.likeComment);
 
 
 module.exports = router;

@@ -6,11 +6,14 @@ module.exports = (sequelize, DataTypes) => {
 	}, {});
 	user.associate = function (models) {
 
-		user.hasMany(models.comment);
+		user.hasMany(models.comment, { as: 'author'});
 
 		user.belongsToMany(models.title, {through: 'favorites'});
 		user.belongsToMany(models.tag, {through: 'tagsBlocked'});
 		user.belongsToMany(models.chapter, {through: 'history'});
+
+		user.belongsToMany(models.comment, {through: 'likes'});
 	};
+
 	return user;
 };

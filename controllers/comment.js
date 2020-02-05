@@ -70,7 +70,8 @@ module.exports = {
                     model: models.user,
                     as: 'liker',
                     attributes: ['id'],
-                    //where: {id: req.userModel.id}
+                    where: {id: req.userModel.id},
+                    required: false
                 }
             ];
             ap2 = [
@@ -78,7 +79,8 @@ module.exports = {
                     model: models.user,
                     as: 'liker',
                     attributes: ['id'],
-                   // where: {id: req.userModel.id}
+                    where: {id: req.userModel.id},
+                    required: false
                 }
             ];
         }
@@ -91,10 +93,14 @@ module.exports = {
                 where: {titleId, parentCommentId: null},
                 offset: offset || 0,
                 limit: Math.min(limit || 100, 100),
+                order: [['createdAt', 'DESC']],
                 include: [
                     {
                         model: models.comment,
                         as: "childComments",
+                        order: [
+                            [{model: models.comment}, 'createdAt', 'ASC']
+                        ],
                         include: [
                             {
                                 model: models.user,
@@ -113,8 +119,6 @@ module.exports = {
                 ]
             };
             console.log(JSON.stringify(options))
-
-
 
 
             const comments = await models.comment.findAll(options);

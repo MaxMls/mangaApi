@@ -38,6 +38,9 @@ router.post('/users', controllers.createUser); // Аккаунты пользо�
 router.get('/users', admin, controllers.getUsers);
 router.get('/users/:userId', controllers.getUserById);
 router.put('/users/:userId', user, controllers.updateUser);
+
+router.post('/users/:userId/avatar', user, controllers.uploadAvatar);
+//router.get('/users/:userId/avatar', controllers.updateUser);
 //router.delete('/users/:userId', controllers.deleteUser);
 
 router.post('/auth/login', controllers.authLogin);

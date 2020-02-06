@@ -32,7 +32,8 @@ module.exports = {
 
         try {
             const titles = await models.title.findAll({
-                attributes: ['id', 'name', 'db', 'category'],
+                attributes: ['id', 'name', 'db', 'category', 'createdAt'],
+                order: [['createdAt', 'DESC']],
                 include: [{
                     model: models.tag,
                     as: "tags",

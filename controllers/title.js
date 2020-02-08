@@ -30,20 +30,28 @@ module.exports = {
 
         console.log(req.query);
 
+
         try {
-            const titles = await models.title.findAll({
-                attributes: ['id', 'name', 'db', 'category', 'createdAt'],
-                order: [['createdAt', 'DESC']],
-                include: [{
-                    model: models.tag,
-                    as: "tags",
-                    attributes: ['id', 'name'],
-                    through: {attributes: []}
-                }],
-                offset: offset || 0,
-                limit: Math.min(limit || 100, 100),
-                where: {category}
-            });
+            const titles = (category === 'favorite' && req.userModel) ?
+                await req.userModel.getTitles({
+                    attributes: ['id', 'name', 'db', 'category', 'createdAt'],
+                    order: [['createdAt', 'DESC']],
+                    offset: offset || 0,
+                    limit: Math.min(limit || 100, 100),
+                }) :
+                await models.title.findAll({
+                    attributes: ['id', 'name', 'db', 'category', 'createdAt'],
+                    order: [['createdAt', 'DESC']],
+                    include: [{
+                        model: models.tag,
+                        as: "tags",
+                        attributes: ['id', 'name'],
+                        through: {attributes: []}
+                    }],
+                    offset: offset || 0,
+                    limit: Math.min(limit || 100, 100),
+                    where: {category}
+                });
             return res.status(200).json({titles});
         } catch (error) {
             return res.status(500).send(error.message);
@@ -51,7 +59,7 @@ module.exports = {
     },
 
 
-    async getTitleById(req, res){
+    async getTitleById(req, res) {
 
         try {
             const {titleId} = req.params;
@@ -83,7 +91,7 @@ module.exports = {
 
                 title.chapters = title.chapters.forEach(c => {
                     const hist = history.find(hc => hc.dataValues.id === c.dataValues.id);
-                    c.dataValues.history = hist ? hist.history : { pageNum: 0};
+                    c.dataValues.history = hist ? hist.history : {pageNum: 0};
                 })
             }
 
@@ -98,12 +106,11 @@ module.exports = {
     },
     changeFavorite: async (req, res) => {
         const {titleId, isFavorite = false} = req.body;
-        if(titleId === undefined) return res.status(500).send('not selected title');
-        try{
+        if (titleId === undefined) return res.status(500).send('not selected title');
+        try {
             const result = await req.userModel[(isFavorite ? 'add' : 'remove') + 'Title'](titleId);
             return res.status(200).json(result);
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
             return res.status(500).send(e.message);
         }
